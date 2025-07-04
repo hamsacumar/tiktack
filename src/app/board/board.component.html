@@ -1,11 +1,18 @@
+<h1>Current Player: {{ player }} </h1>
 
-    <h1>Current Player: {{ player }} </h1>
+<div class="center">
 
-<button nbButton outline status="danger" (click)="newGame()">Start new Game</button>
+    <div class="spline-background">
+    <iframe
+      src="https://my.spline.design/genkubgreetingrobot-MLFiG9z2t6aFNeE1tuK8aPr7/"
+      frameborder="0"
+      width="100%"
+      height="100%"
+      allowfullscreen>
+    </iframe>
+    </div>
 
-<h2 *ngIf="winner">
-    Player {{ winner }} won the game!
-</h2>
+
 
 <main class="board">
     <div *ngFor="let row of grid; let rowIndex = index" class="row">
@@ -17,3 +24,13 @@
 </main>
 
 
+</div>
+
+
+
+
+<h2 *ngIf="winner">
+    Player {{ winner }} won the game!
+</h2>
+
+<button nbButton outline status="danger" (click)="newGame()">Start new Game</button>

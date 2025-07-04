@@ -1,0 +1,49 @@
+<!-- Template -->
+<div class="game-container">
+  <!-- Spline 3D Background -->
+  <div class="spline-background">
+    <iframe
+      src="https://my.spline.design/robotarm-FIuMuDJqugF9qd0CnFg6OXkf/"
+      frameborder="0"
+      width="100%"
+      height="100%"
+      allowfullscreen>
+    </iframe>
+  </div>
+
+  <div class="login-overlay">
+  <!-- Left side: Button -->
+  <div class="btn-container">
+    <div class="error">{{ errorMsg }}</div>
+    <button class="btn btn-dark" (click)="login()" [disabled]="!Username || !Password">
+      PLAY
+    </button>
+  </div>
+
+  <!-- Right side: Input fields -->
+  <div class="login-form">
+    <div class="form-group">
+      <input
+        type="text"
+        name="uname"
+        id="uname"
+        class="form-control"
+        [(ngModel)]="Username"
+        placeholder="Username"
+        required />
+    </div>
+    <div class="form-group">
+      <input
+        type="password"
+        name="pword"
+        id="pword"
+        class="form-control"
+        [(ngModel)]="Password"
+        placeholder="Password"
+        required />
+    </div>
+  </div>
+</div>
+
+</div>
+

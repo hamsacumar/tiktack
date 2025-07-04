@@ -1,11 +1,11 @@
+// board.component.ts
 import { Component, OnInit } from '@angular/core';
 import { SquareComponent } from '../square/square.component';
 import { CommonModule } from '@angular/common'; 
 
-
 @Component({
   selector: 'app-board',
-  imports: [SquareComponent,CommonModule],
+  imports: [SquareComponent, CommonModule],
   templateUrl: './board.component.html',
   styleUrls: ['./board.component.css'] 
 })
@@ -14,7 +14,6 @@ export class BoardComponent implements OnInit {
   xIsNext!: boolean;
   winner!: string | null;  
 
-   
   ngOnInit() {
     this.newGame();
   }
@@ -30,14 +29,31 @@ export class BoardComponent implements OnInit {
   }
 
   makeMove(rowIndex: number, colIndex: number) {
-    if (!this.grid[rowIndex][colIndex]) {
-        this.grid[rowIndex][colIndex] = this.player;
-        this.xIsNext = !this.xIsNext;
+    // Check if game is over or square is already filled
+    if (this.winner || this.grid[rowIndex][colIndex]) {
+      return;
     }
 
+    // Make the move
+    this.grid[rowIndex][colIndex] = this.player;
+    
+    // Add rotation animation
+    const boardElement = document.querySelector('.board');
+    if (boardElement) {
+      boardElement.classList.add('rotate-animation');
+      
+      // Remove the class after animation completes
+      setTimeout(() => {
+        boardElement.classList.remove('rotate-animation');
+      }, 800);
+    }
+    
+    // Switch player
+    this.xIsNext = !this.xIsNext;
+    
+    // Check for winner
     this.winner = this.calculateWinner();
-}
-
+  }
 
   calculateWinner(): string | null {
     const lines = [
@@ -67,3 +83,4 @@ export class BoardComponent implements OnInit {
     return null;
   }
 }
+
