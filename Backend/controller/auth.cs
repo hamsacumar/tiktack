@@ -12,15 +12,12 @@ using Microsoft.IdentityModel.Tokens;
 using Backend.model;         // for RegisterDto, LoginDto, AppUser
 using Backend.Service;       // for MongoUserService
 
-
-
 [ApiController]
 [Route("api/[controller]")]
 public class AuthController : ControllerBase
 {
     private readonly UserManager<IdentityUser> _userManager;
     private readonly MongoUserService _mongoUserService;
-
     private readonly IConfiguration _configuration;
 
     public AuthController(
@@ -32,7 +29,6 @@ public class AuthController : ControllerBase
         _mongoUserService = mongoUserService;
         _configuration = configuration;
     }
-
 
     [HttpPost("register")]
     public async Task<IActionResult> Register(RegisterDto model)
@@ -64,47 +60,48 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost("login")]
-public async Task<IActionResult> Login(LoginDto model)
-{
-    var user = await _userManager.FindByEmailAsync(model.Email);
-    if (user == null)
+    public async Task<IActionResult> Login(LoginDto model)
     {
-        return Unauthorized("Invalid email or password.");
+        // Find user by username instead of email
+        var user = await _userManager.FindByNameAsync(model.Username);
+        if (user == null)
+        {
+            return Unauthorized("Invalid username or password.");
+        }
+
+        var passwordValid = await _userManager.CheckPasswordAsync(user, model.Password);
+        if (!passwordValid)
+        {
+            return Unauthorized("Invalid username or password.");
+        }
+
+        var secretKey = _configuration["Jwt:Key"];
+        if (string.IsNullOrEmpty(secretKey) || secretKey.Length < 32)
+        {
+            throw new Exception("JWT Key is missing or too short. It must be at least 32 characters.");
+        }
+
+        var authClaims = new List<Claim>
+        {
+            new Claim(ClaimTypes.NameIdentifier, user.Id),
+            new Claim(ClaimTypes.Email, user.Email ?? ""),
+            new Claim(ClaimTypes.Name, user.UserName ?? "")
+        };
+
+        var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
+
+        var token = new JwtSecurityToken(
+            expires: DateTime.UtcNow.AddHours(1),
+            claims: authClaims,
+            signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
+        );
+
+        return Ok(new
+        {
+            token = new JwtSecurityTokenHandler().WriteToken(token),
+            expiration = token.ValidTo
+        });
     }
-
-    var passwordValid = await _userManager.CheckPasswordAsync(user, model.Password);
-    if (!passwordValid)
-    {
-        return Unauthorized("Invalid email or password.");
-    }
-
-    var secretKey = _configuration["Jwt:Key"];
-    if (string.IsNullOrEmpty(secretKey) || secretKey.Length < 32)
-    {
-        throw new Exception("JWT Key is missing or too short. It must be at least 32 characters.");
-    }
-
-    var authClaims = new List<Claim>
-    {
-        new Claim(ClaimTypes.NameIdentifier, user.Id),
-        new Claim(ClaimTypes.Email, user.Email ?? ""),
-        new Claim(ClaimTypes.Name, user.UserName ?? "")
-    };
-
-    var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
-
-    var token = new JwtSecurityToken(
-        expires: DateTime.UtcNow.AddHours(1),
-        claims: authClaims,
-        signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
-    );
-
-    return Ok(new
-    {
-        token = new JwtSecurityTokenHandler().WriteToken(token),
-        expiration = token.ValidTo
-    });
-}
 
     [Authorize]
     [HttpGet("profile")]
@@ -113,6 +110,4 @@ public async Task<IActionResult> Login(LoginDto model)
         var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
         return Ok(new { message = $"Hello user with ID: {userId}" });
     }
-
-
 }
