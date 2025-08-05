@@ -9,6 +9,23 @@ body {
     font-family: 'Arial', sans-serif;
     perspective: 1200px; /* Enable 3D perspective for the entire scene */
 }
+.center {
+  display: flex;
+  height: 80vh; /* Fill the full vertical screen */
+}
+
+.spline-background, .board {
+  flex: 1; /* 50% each */
+  width: 50%;
+  height: 100vh; /* Ensures full height */
+  overflow: hidden; /* Prevent scrollbars if content overflows */
+}
+
+.spline-background iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
 
 .board {
     display: flex;

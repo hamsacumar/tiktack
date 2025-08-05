@@ -14,14 +14,14 @@
 
 
 
-<main class="board">
+<div class="board">
     <div *ngFor="let row of grid; let rowIndex = index" class="row">
         <app-square *ngFor="let val of row; let colIndex = index" 
             [value]="val"
             (click)="makeMove(rowIndex, colIndex)"> 
         </app-square>
     </div>
-</main>
+</div>
 
 
 </div>
