@@ -2175,11 +2175,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\tik-tack\\myapp\\Backend\\Backend.csproj",
+      "projectUniqueName": "E:\\deploy\\tik-tak\\tiktack\\backend\\Backend.csproj",
       "projectName": "Backend",
-      "projectPath": "E:\\tik-tack\\myapp\\Backend\\Backend.csproj",
+      "projectPath": "E:\\deploy\\tik-tak\\tiktack\\backend\\Backend.csproj",
       "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
-      "outputPath": "E:\\tik-tack\\myapp\\Backend\\obj\\",
+      "outputPath": "E:\\deploy\\tik-tak\\tiktack\\backend\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\ADMIN\\AppData\\Roaming\\NuGet\\NuGet.Config"

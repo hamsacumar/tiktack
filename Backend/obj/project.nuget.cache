@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "LBQ92vLl4Bw=",
+  "dgSpecHash": "kgWWvyJWxxo=",
   "success": true,
-  "projectFilePath": "E:\\tik-tack\\myapp\\Backend\\Backend.csproj",
+  "projectFilePath": "E:\\deploy\\tik-tak\\tiktack\\Backend\\Backend.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\ADMIN\\.nuget\\packages\\dnsclient\\1.6.1\\dnsclient.1.6.1.nupkg.sha512",
     "C:\\Users\\ADMIN\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\9.0.7\\microsoft.aspnetcore.authentication.jwtbearer.9.0.7.nupkg.sha512",
