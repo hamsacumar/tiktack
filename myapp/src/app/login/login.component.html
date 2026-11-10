@@ -1,36 +1,35 @@
 <!-- login.component.html -->
-<div class="auth-page">
+<div class="game-container">
   <!-- Spline 3D Background -->
   <div class="spline-background">
-    <iframe src="https://my.spline.design/robotarm-FIuMuDJqugF9qd0CnFg6OXkf/" title="3D robot arm"
+    <iframe src="https://my.spline.design/robotarm-FIuMuDJqugF9qd0CnFg6OXkf/" frameborder="0" width="100%" height="100%"
       allowfullscreen>
     </iframe>
   </div>
 
-  <div class="auth-overlay">
-    <form class="auth-card glass-card" (ngSubmit)="login()">
-      <div class="auth-brand"><span class="x">X</span><span class="o">O</span> Tic Tac Toe</div>
-      <h1 class="auth-title">Welcome back</h1>
-      <p class="auth-subtitle">Sign in to jump into a match.</p>
-
-      <div class="alert error" *ngIf="errorMsg" role="alert">{{ errorMsg }}</div>
-
-      <div class="form-group">
-        <label for="username">Username</label>
-        <input type="text" name="username" id="username" class="form-control" autocomplete="username"
-               [(ngModel)]="username" placeholder="Enter your username" required />
-      </div>
-      <div class="form-group">
-        <label for="password">Password</label>
-        <input type="password" name="password" id="password" class="form-control" autocomplete="current-password"
-               [(ngModel)]="password" placeholder="Enter your password" required />
-      </div>
-
-      <button type="submit" class="btn-primary" [disabled]="!username || !password">
-        Play
+  <div class="login-overlay">
+    <!-- Left side: Button -->
+    <div class="btn-container">
+      <div class="error" *ngIf="errorMsg">{{ errorMsg }}</div>
+      <button class="btn btn-dark" (click)="login()" [disabled]="!username || !password">
+        PLAY
       </button>
+      <!-- Add register link -->
+      <div class="register-link">
+        <p>Don't have an account? <a routerLink="/register">Register here</a></p>
+      </div>
+    </div>
 
-      <p class="auth-footer">Don't have an account? <a routerLink="/register">Register here</a></p>
-    </form>
+    <!-- Right side: Input fields -->
+    <div class="login-form">
+      <div class="form-group">
+        <input type="username" name="username" id="username" class="form-control" 
+               [(ngModel)]="username" placeholder="username" required />
+      </div>
+      <div class="form-group">
+        <input type="password" name="password" id="password" class="form-control" 
+               [(ngModel)]="password" placeholder="Password" required />
+      </div>
+    </div>
   </div>
 </div>
