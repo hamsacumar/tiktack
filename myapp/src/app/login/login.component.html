@@ -1,35 +1,36 @@
 <!-- login.component.html -->
-<div class="game-container">
+<div class="auth-page">
   <!-- Spline 3D Background -->
   <div class="spline-background">
-    <iframe src="https://my.spline.design/robotarm-FIuMuDJqugF9qd0CnFg6OXkf/" frameborder="0" width="100%" height="100%"
+    <iframe src="https://my.spline.design/robotarm-FIuMuDJqugF9qd0CnFg6OXkf/" title="3D robot arm"
       allowfullscreen>
     </iframe>
   </div>
 
-  <div class="login-overlay">
-    <!-- Left side: Button -->
-    <div class="btn-container">
-      <div class="error" *ngIf="errorMsg">{{ errorMsg }}</div>
-      <button class="btn btn-dark" (click)="login()" [disabled]="!username || !password">
-        PLAY
-      </button>
-      <!-- Add register link -->
-      <div class="register-link">
-        <p>Don't have an account? <a routerLink="/register">Register here</a></p>
-      </div>
-    </div>
+  <div class="auth-overlay">
+    <form class="auth-card glass-card" (ngSubmit)="login()">
+      <div class="auth-brand"><span class="x">X</span><span class="o">O</span> Tic Tac Toe</div>
+      <h1 class="auth-title">Welcome back</h1>
+      <p class="auth-subtitle">Sign in to jump into a match.</p>
 
-    <!-- Right side: Input fields -->
-    <div class="login-form">
+      <div class="alert error" *ngIf="errorMsg" role="alert">{{ errorMsg }}</div>
+
       <div class="form-group">
-        <input type="username" name="username" id="username" class="form-control" 
-               [(ngModel)]="username" placeholder="username" required />
+        <label for="username">Username</label>
+        <input type="text" name="username" id="username" class="form-control" autocomplete="username"
+               [(ngModel)]="username" placeholder="Enter your username" required />
       </div>
       <div class="form-group">
-        <input type="password" name="password" id="password" class="form-control" 
-               [(ngModel)]="password" placeholder="Password" required />
+        <label for="password">Password</label>
+        <input type="password" name="password" id="password" class="form-control" autocomplete="current-password"
+               [(ngModel)]="password" placeholder="Enter your password" required />
       </div>
-    </div>
+
+      <button type="submit" class="btn-primary" [disabled]="!username || !password">
+        Play
+      </button>
+
+      <p class="auth-footer">Don't have an account? <a routerLink="/register">Register here</a></p>
+    </form>
   </div>
 </div>
