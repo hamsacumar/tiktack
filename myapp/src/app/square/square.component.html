@@ -1,4 +1,3 @@
-<button type="button" class="cell" [class.x]="value === 'X'" [class.o]="value === 'O'"
-        [attr.aria-label]="value ? 'Square ' + value : 'Empty square'" (click)="onClick()">
+<button class="red-button" (click)="onClick()">
     <span>{{ value }}</span>
 </button>
