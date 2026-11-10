@@ -86,10 +86,23 @@ body {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  padding: 2rem;
+  border-radius: 20px;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
 }
 
 .error {
-  color: #dc3545;
+  color: #ff8a8a;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+}
+
+.success {
+  color: #86efac;
   margin-bottom: 1rem;
   font-size: 0.9rem;
 }
@@ -100,6 +113,13 @@ body {
   flex-direction: column;
   align-items: flex-end;
   width: 300px;
+  padding: 2rem;
+  border-radius: 20px;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
 }
 
 .form-group {
@@ -110,19 +130,31 @@ body {
 
 
 .form-control {
-    border: none;
+  border: 1px solid var(--glass-border);
   width: 100%;
   padding: 0.75rem;
-  border-radius: 5px;
+  border-radius: 10px;
   font-size: 1rem;
-  background: linear-gradient(to right, #ffffff, #000000);
+  background: var(--glass-bg-strong);
+  color: #f1f5f9;
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+}
+
+.form-control::placeholder {
+  color: rgba(241, 245, 249, 0.6);
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: var(--glass-accent);
+  box-shadow: 0 0 0 3px rgba(125, 211, 252, 0.25);
 }
 
 .btn {
-  margin-left: 140px;
   padding: 0.75rem 2rem;
-  border: none;
-  border-radius: 5px;
+  border: 1px solid var(--glass-border);
+  border-radius: 10px;
   font-size: 1rem;
   font-weight: 500;
   cursor: pointer;
@@ -130,12 +162,15 @@ body {
 }
 
 .btn-dark {
-  background: linear-gradient(to right, rgb(5, 5, 5) , white);
+  background: var(--glass-bg-strong);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
   color: white;
 }
 
 .btn-dark:hover:not(:disabled) {
-  background: #23272b;
+  background: rgba(125, 211, 252, 0.25);
+  border-color: var(--glass-accent);
   transform: translateY(-2px);
 }
 
@@ -144,8 +179,13 @@ body {
   cursor: not-allowed;
 }
 
-.error {
-  color: #dc3545;
-  margin-bottom: 1rem;
+.register-link,
+.login-link {
+  color: rgba(241, 245, 249, 0.8);
   font-size: 0.9rem;
+}
+
+.register-link a,
+.login-link a {
+  color: var(--glass-accent);
 }
