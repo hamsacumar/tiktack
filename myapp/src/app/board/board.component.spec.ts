@@ -20,4 +20,14 @@ describe('BoardComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should color the player badge for the current player', () => {
+    const badge: HTMLElement = fixture.nativeElement.querySelector('.player-badge');
+    expect(badge.classList).toContain('x');
+
+    component.xIsNext = false;
+    fixture.detectChanges();
+    expect(badge.classList).toContain('o');
+    expect(badge.classList).not.toContain('x');
+  });
 });
