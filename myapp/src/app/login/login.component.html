@@ -10,6 +10,7 @@
   <div class="login-overlay">
     <!-- Left side: Button -->
     <div class="btn-container">
+      <h1 class="title">Tic Tac Toe</h1>
       <div class="error" *ngIf="errorMsg">{{ errorMsg }}</div>
       <button class="btn btn-dark" (click)="login()" [disabled]="!username || !password">
         PLAY

@@ -1,0 +1,33 @@
+feature:
+  id: "002-liquid-glass-ui"
+  name: "liquid-glass-ui"
+  number: 2
+  branch: "feat/002-liquid-glass-ui"
+  lifecycle: "research"
+  createdAt: "2026-11-10T08:15:11Z"
+status:
+  phase: "research"
+  progress:
+    completed: 0
+    total: 0
+    percentage: 0
+  currentTask: null
+  lastUpdated: "2026-11-10T08:15:11Z"
+  lastUpdatedBy: "feature-agent"
+  completedPhases:
+    - "fast-implement"
+validation:
+  lastRun: null
+  gatesPassed: []
+  autoFixesApplied: []
+tasks:
+  current: null
+  blocked: []
+  failed: []
+checkpoints:
+  - phase: "feature-created"
+    completedAt: "2026-11-10T08:15:11Z"
+    completedBy: "feature-agent"
+errors:
+  current: null
+  history: []

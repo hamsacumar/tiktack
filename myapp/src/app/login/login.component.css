@@ -1,17 +1,11 @@
-/* Method 1: Hide overflow on body and html */
-html, body {
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-  height: 100vh;
-  width: 100vw;
+:host {
+  display: block;
 }
 
-/* Method 2: Container styling */
 .game-container {
   width: 100vw;
   height: 100vh;
-  position: fixed; /* Use fixed instead of relative */
+  position: fixed;
   top: 0;
   left: 0;
   overflow: hidden;
@@ -19,87 +13,135 @@ html, body {
 
 .spline-background {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  inset: 0;
   z-index: 1;
   overflow: hidden;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
-/* Method 3: Remove scrollbars from iframe */
+.spline-background::-webkit-scrollbar {
+  display: none;
+}
+
 .spline-background iframe {
   width: 100%;
   height: 100%;
   border: none;
+  margin: 0;
+  padding: 0;
   overflow: hidden;
-  /* Remove any margins/padding */
-  margin: 0;
-  padding: 0;
 }
-
-/* Method 4: Hide scrollbars but keep scrolling functionality */
-.spline-background {
-  /* Hide scrollbar for Chrome, Safari and Opera */
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
-}
-
-.spline-background::-webkit-scrollbar {
-  display: none; /* Chrome, Safari, Opera */
-}
-
-/* Method 5: Ensure no body margins */
-* {
-  box-sizing: border-box;
-}
-
-body {
-  margin: 0;
-  padding: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
-}
-
 
 .login-overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
+  inset: 0;
   display: flex;
-  justify-content: space-between; /* Split left and right */
-  align-items: center;            /* Center vertically */
-  padding: 0 5%;                  /* Add side padding */
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+  padding: 0 5%;
   z-index: 10;
-  background: transparent;        /* Optional: rgba(0,0,0,0.5) if dim needed */
-  pointer-events: none;           /* Allow 3D background interaction */
+  background: transparent;
+  pointer-events: none; /* allow 3D background interaction */
 }
 
 .btn-container,
 .login-form {
-  pointer-events: auto;           /* Enable form interactions */
+  pointer-events: auto;
 }
 
-/* Left-side: Button */
-.btn-container {
+/* Liquid glass panels */
+.btn-container,
+.login-form {
+  position: relative;
   display: flex;
   flex-direction: column;
+  padding: 2.25rem;
+  border-radius: var(--liquid-radius);
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--liquid-shadow);
+  backdrop-filter: blur(var(--glass-blur)) saturate(var(--liquid-saturate));
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--liquid-saturate));
+  overflow: hidden;
+  isolation: isolate;
+  animation: panel-in 0.7s var(--liquid-ease) both;
+}
+
+/* Specular highlight */
+.btn-container::before,
+.login-form::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: var(--liquid-highlight);
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* Soft refracted glow at the bottom edge */
+.btn-container::after,
+.login-form::after {
+  content: '';
+  position: absolute;
+  left: 10%;
+  right: 10%;
+  bottom: -40%;
+  height: 60%;
+  border-radius: 50%;
+  background: var(--liquid-accent-gradient);
+  filter: blur(40px);
+  opacity: 0.25;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.btn-container {
   align-items: flex-start;
+  max-width: 340px;
+}
+
+.login-form {
+  align-items: stretch;
+  width: 320px;
+  animation-delay: 0.1s;
+}
+
+.title {
+  margin: 0 0 1.25rem;
+  font-size: 2rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  background: var(--liquid-accent-gradient);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: gradient-flow 8s ease infinite;
+}
+
+.error,
+.success {
+  margin-bottom: 1rem;
+  padding: 0.5rem 0.85rem;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
 }
 
 .error {
-  color: #dc3545;
-  margin-bottom: 1rem;
-  font-size: 0.9rem;
+  color: #fecaca;
+  background: rgba(248, 113, 113, 0.15);
+  border: 1px solid rgba(248, 113, 113, 0.35);
 }
 
-/* Right-side: Form inputs */
-.login-form {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  width: 300px;
+.success {
+  color: #bbf7d0;
+  background: rgba(74, 222, 128, 0.15);
+  border: 1px solid rgba(74, 222, 128, 0.35);
 }
 
 .form-group {
@@ -107,45 +149,145 @@ body {
   width: 100%;
 }
 
-
-
-.form-control {
-    border: none;
-  width: 100%;
-  padding: 0.75rem;
-  border-radius: 5px;
-  font-size: 1rem;
-  background: linear-gradient(to right, #ffffff, #000000);
+.form-group:last-child {
+  margin-bottom: 0;
 }
 
-.btn {
-  margin-left: 140px;
-  padding: 0.75rem 2rem;
-  border: none;
-  border-radius: 5px;
+.form-control {
+  width: 100%;
+  padding: 0.85rem 1.1rem;
+  border: 1px solid var(--glass-border);
+  border-radius: 999px;
   font-size: 1rem;
-  font-weight: 500;
+  background: var(--glass-bg-strong);
+  color: #f1f5f9;
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.25), inset 0 -1px 0 rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(var(--glass-blur)) saturate(var(--liquid-saturate));
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--liquid-saturate));
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s var(--liquid-ease);
+}
+
+.form-control::placeholder {
+  color: rgba(241, 245, 249, 0.6);
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: var(--glass-accent);
+  transform: scale(1.02);
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.25), 0 0 0 4px rgba(125, 211, 252, 0.2),
+    0 0 24px rgba(192, 132, 252, 0.25);
+}
+
+/* Liquid pill button */
+.btn {
+  position: relative;
+  overflow: hidden;
+  padding: 0.85rem 2.5rem;
+  border: 1px solid var(--glass-border);
+  border-radius: 999px;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
   cursor: pointer;
-  transition: all 0.3s;
+  transition: transform 0.4s var(--liquid-ease), box-shadow 0.3s ease, border-color 0.3s ease;
 }
 
 .btn-dark {
-  background: linear-gradient(to right, rgb(5, 5, 5) , white);
-  color: white;
+  color: #fff;
+  background: linear-gradient(135deg, rgba(125, 211, 252, 0.35), rgba(192, 132, 252, 0.35)),
+    var(--glass-bg-strong);
+  box-shadow: var(--liquid-edge), 0 8px 24px rgba(125, 211, 252, 0.2);
+  backdrop-filter: blur(var(--glass-blur)) saturate(var(--liquid-saturate));
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--liquid-saturate));
+}
+
+.btn-dark::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 40%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.45), transparent);
+  transform: translateX(-120%) skewX(-20deg);
+  pointer-events: none;
 }
 
 .btn-dark:hover:not(:disabled) {
-  background: #23272b;
-  transform: translateY(-2px);
+  border-color: var(--glass-accent);
+  transform: translateY(-2px) scale(1.04);
+  box-shadow: var(--liquid-edge), 0 12px 32px rgba(192, 132, 252, 0.35);
+}
+
+.btn-dark:hover:not(:disabled)::after {
+  animation: liquid-sheen 0.9s ease;
+}
+
+.btn-dark:active:not(:disabled) {
+  transform: scale(0.97);
 }
 
 .btn:disabled {
-  opacity: 0.6;
+  opacity: 0.55;
   cursor: not-allowed;
 }
 
-.error {
-  color: #dc3545;
-  margin-bottom: 1rem;
+.register-link,
+.login-link {
+  margin-top: 0.5rem;
+  color: rgba(241, 245, 249, 0.8);
   font-size: 0.9rem;
+}
+
+.register-link a,
+.login-link a {
+  color: var(--glass-accent);
+  font-weight: 600;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.register-link a:hover,
+.login-link a:hover {
+  color: var(--liquid-accent-2);
+  border-color: currentColor;
+}
+
+@keyframes panel-in {
+  from {
+    opacity: 0;
+    transform: translateY(24px) scale(0.96);
+    filter: blur(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+}
+
+@keyframes gradient-flow {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+@media (max-width: 760px) {
+  .login-overlay {
+    flex-direction: column-reverse;
+    justify-content: center;
+    padding: 1.5rem;
+  }
+
+  .btn-container,
+  .login-form {
+    width: 100%;
+    max-width: 360px;
+  }
 }
